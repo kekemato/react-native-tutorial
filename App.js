@@ -1,16 +1,20 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function App() {
+  const [name, setName] = useState("Magda");
+
+  const clickHandler = () => {
+    setName((prevState) => (prevState === "Magda" ? "Patryk" : "Magda"));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.boldText}>Hello, World</Text>
+        <Text style={styles.boldText}>Hello, {name}</Text>
       </View>
-      <View style={styles.body}>
-        <Text style={styles.boldText}>Lorem ipsum dolor sit amet</Text>
-        <Text style={styles.boldText}>Lorem ipsum dolor sit amet</Text>
-        <Text style={styles.boldText}>Lorem ipsum dolor sit amet</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Update state" onPress={clickHandler} />
       </View>
     </View>
   );
@@ -23,15 +27,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  header: {
-    backgroundColor: "#fff",
-    padding: 20,
-  },
   boldText: {
     fontWeight: "bold",
+    color: "#fff",
   },
-  body: {
-    backgroundColor: "#c5efff",
-    padding: 20,
+  buttonContainer: {
+    marginTop: 20,
   },
 });
