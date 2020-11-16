@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import {  FlatList, StyleSheet, Text, View } from "react-native";
 import Header from './components/Header';
+import TodoItem from './components/TodoItem';
 
 export default function App() {
   const [todos, setTodos] = useState([
     {
-      text: 'buy milk', id: '1'
+      text: 'buy milk', id: '1', isDone: false
     },
     {
-      text: 'create an app', id: '2'
+      text: 'create an app', id: '2', isDone: false
     },
     {
-      text: 'play some video games', id: '3'
+      text: 'play some video games', id: '3', isDone: false
     },
   ])
+
+  const deleteItem = (id) => {
+    setTodos(prevTodos => prevTodos.map(todo => {
+      if (todo.id === id) {
+        return {...todo, isDone: !todo.isDone}
+      }
+      return todo
+    }))
+  }
 
   return (
     <View style={styles.container}>
@@ -24,8 +34,8 @@ export default function App() {
          <FlatList 
          data={todos} 
          keyExtractor={({id}) => id} 
-         renderItem={({item: {text}}) => (
-           <Text style={styles.listItem}>{text}</Text>
+         renderItem={({item}) => (
+           <TodoItem item={item} deleteItem={deleteItem}/>
          )}/>
        </View>
      </View>
@@ -47,12 +57,5 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 40
-  },
-  listItem: {
-    marginTop: 10,
-    fontSize: 24,
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10
   },
 });
