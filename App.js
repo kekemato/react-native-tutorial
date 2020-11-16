@@ -1,54 +1,34 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {  FlatList, StyleSheet, Text, View } from "react-native";
+import Header from './components/Header';
 
 export default function App() {
-  const [people, setPeople] = useState([
+  const [todos, setTodos] = useState([
     {
-      name: "Magda",
-      id: "1",
+      text: 'buy milk', id: '1'
     },
     {
-      name: "Patryk",
-      id: "2",
+      text: 'create an app', id: '2'
     },
     {
-      name: "Beatka",
-      id: "3",
+      text: 'play some video games', id: '3'
     },
-    {
-      name: "Jurek",
-      id: "4",
-    },
-    {
-      name: "Natalia",
-      id: "5",
-    },
-    {
-      name: "Leszek",
-      id: "6",
-    },
-    {
-      name: "Michał",
-      id: "7",
-    },
-  ]);
-
-  const pressHandler = (id) => {
-    setPeople((prevPeople) => prevPeople.filter((person) => person.id !== id))
-  }
+  ])
 
   return (
     <View style={styles.container}>
-      <FlatList
-        numColumns={2}
-        keyExtractor={({ id }) => id}
-        data={people}
-        renderItem={({ item: { name, id } }) => (
-          <TouchableOpacity onPress={() => pressHandler(id)}>
-            <Text style={styles.listItem}>{name}</Text>
-          </TouchableOpacity>
-        )}
-      />
+     <Header />
+     <View style={styles.content}>
+       {/** to do form */}
+       <View style={styles.list}>
+         <FlatList 
+         data={todos} 
+         keyExtractor={({id}) => id} 
+         renderItem={({item: {text}}) => (
+           <Text style={styles.listItem}>{text}</Text>
+         )}/>
+       </View>
+     </View>
     </View>
   );
 }
@@ -57,16 +37,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#c5efff",
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    // paddingTop: 40,
+    // paddingHorizontal: 20,
     // alignItems: "center",
     // justifyContent: "center",
   },
+  content: {
+    padding: 40
+  },
+  list: {
+    marginTop: 40
+  },
   listItem: {
-    marginTop: 24,
-    marginHorizontal: 10,
-    padding: 30,
-    backgroundColor: "#fff",
+    marginTop: 10,
     fontSize: 24,
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10
   },
 });
